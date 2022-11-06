@@ -102,5 +102,8 @@
       }
     }
   },
-  "defaultProject": "terrain-posts"
+  "defaultProject": "terrain-posts",
+  "cli": {
+    "analytics": "248dc36e-cdc4-4e91-b162-37b96d6434d2"
+  }
 }
