@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "1f6f1400-9292-449c-992a-a43a8ca4bc8d"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -101,6 +104,5 @@
         }
       }
     }
-  },
-  "defaultProject": "terrain-posts"
+  }
 }
