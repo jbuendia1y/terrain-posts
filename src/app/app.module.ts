@@ -9,6 +9,7 @@ import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    NgbModule
   ],
   providers: [
     ScreenTrackingService,UserTrackingService
