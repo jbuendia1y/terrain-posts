@@ -62,4 +62,6 @@
     <fa-icon [icon]="faGoogle"></fa-icon> Google
   </button>
 </form>
-<pre>{{ user$ | async | json }}</pre>
+<a [class]="'d-block ' + textClass" [routerLink]="['/auth/register']"
+  >No tienes cuenta?, regístrate !</a
+>

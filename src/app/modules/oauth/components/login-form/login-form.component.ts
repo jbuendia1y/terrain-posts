@@ -56,5 +56,6 @@ export class LoginFormComponent implements OnInit {
     if (provider === 'google') {
       const res = await this.authService.signInWithGoogle();
     }
+    this.shared.navigate(['/']);
   }
 }
