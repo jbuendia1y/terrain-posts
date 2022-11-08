@@ -11,11 +11,11 @@ export interface IUser {
 
 export interface ICreateUser {
   id: string;
-  avatar?: string;
+  avatar?: string | null;
 
-  firstName?: string;
-  lastName?: string;
-  username?: string;
-  email?: string;
-  password?: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  username?: string | null;
+  email?: string | null;
+  password?: string | null;
 }

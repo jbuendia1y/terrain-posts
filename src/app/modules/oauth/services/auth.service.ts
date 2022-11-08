@@ -43,10 +43,10 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const res = await signInWithEmailAndPassword(this.auth, email, password);
-    return await lastValueFrom(this.usersService.findOne(res.user.uid));
+    return await firstValueFrom(this.usersService.findOne(res.user.uid));
   }
 
-  async singup(data: ICreateUser) {
+  async singup(data: Omit<ICreateUser, 'id'>) {
     if (!data.email || !data.password)
       throw new Error('You need email and password');
     const res = await createUserWithEmailAndPassword(
@@ -54,7 +54,12 @@ export class AuthService {
       data.email,
       data.password
     );
-    const user = await lastValueFrom(await this.usersService.create(data));
+    const user = await lastValueFrom(
+      await this.usersService.create({
+        ...data,
+        id: res.user.uid,
+      })
+    );
     return user;
   }
 
