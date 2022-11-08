@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { docData, Firestore, setDoc } from '@angular/fire/firestore';
-import { collection, doc } from '@firebase/firestore';
-import { ICreateUser } from '../models';
+import { doc } from '@firebase/firestore';
+import { map } from 'rxjs';
+import { ICreateUser, IUser } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,11 @@ export class UsersService {
   async create({ password: _, ...data }: ICreateUser) {
     const ref = doc(this.firestore, this.source, data.id);
     await setDoc(ref, data);
-    return this.findOne(data.id);
+    return this.findOne(data.id).pipe(map((v) => v as IUser));
   }
 
   findOne(id: string) {
     const ref = doc(this.firestore, this.source, id);
-    return docData(ref);
+    return docData(ref).pipe(map((v) => v as IUser));
   }
 }
