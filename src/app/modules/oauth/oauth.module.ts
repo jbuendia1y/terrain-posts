@@ -6,9 +6,11 @@ import { OauthRoutingModule } from './oauth-routing.module';
 import { LoginFormComponent } from './components';
 import { LoginComponent, RegisterComponent } from './pages';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
-  declarations: [LoginFormComponent, LoginComponent, RegisterComponent, RegisterFormComponent],
+  declarations: [LoginFormComponent, LoginComponent, RegisterComponent, RegisterFormComponent, ProfileDetailsComponent, ProfileComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
