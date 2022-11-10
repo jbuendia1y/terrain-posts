@@ -7,16 +7,8 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   authState,
-  User,
 } from '@angular/fire/auth';
-import {
-  firstValueFrom,
-  lastValueFrom,
-  map,
-  mergeMap,
-  Observable,
-  of,
-} from 'rxjs';
+import { firstValueFrom, lastValueFrom, mergeMap, Observable, of } from 'rxjs';
 import { ICreateUser, IUser } from '../../users/models';
 import { UsersService } from '../../users/services';
 
@@ -81,6 +73,16 @@ export class AuthService {
 
     await this.auth.currentUser?.reload();
     return created;
+  }
+
+  async updateProfile(data: Partial<IUser>) {
+    const id = this.auth.currentUser?.uid;
+    if (!id) {
+      throw new Error('Update profile need currentUser of firebase auth');
+    }
+    const updated = await this.usersService.update(id, data);
+    await this.auth.currentUser?.reload();
+    return updated;
   }
 
   async logout() {

@@ -1,8 +1,12 @@
+<app-header></app-header>
 <div class="container-sm">
   <div class="row mt-4">
     <div class="m-auto col col-md-6">
       <h2 class="text-center">Formulario de registro</h2>
       <app-register-form></app-register-form>
+      <a class="d-block mt-2 text-center" [routerLink]="['/auth/login']"
+        >Ya tienes una cuenta? inicia sessión</a
+      >
     </div>
   </div>
 </div>

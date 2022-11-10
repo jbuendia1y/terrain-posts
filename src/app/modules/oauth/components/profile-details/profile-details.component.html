@@ -1,0 +1,72 @@
+<form
+  *ngIf="user$ | async as user"
+  [formGroup]="profileForm"
+  (ngSubmit)="onSubmit()"
+>
+  <label class="d-block text-center" for="avatar">
+    <img
+      class="profile-avatar"
+      [src]="user.avatar || '/favicon.ico'"
+      [alt]="
+        (user.firstName || 'Sin nombres') +
+        ' ' +
+        (user.lastName || ' sin apellidos')
+      "
+    />
+    <input
+      type="file"
+      [accept]="'.jpeg,.jpg,.png'"
+      id="avatar"
+      name="avatar"
+      [hidden]="true"
+      [disabled]="profileForm.disabled"
+      (change)="detectFiles($event)"
+    />
+  </label>
+  <div class="mb-3">
+    <label for="firstName">Nombres</label>
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      formControlName="firstName"
+      class="form-control"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="lastName">Apellidos</label>
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      formControlName="lastName"
+      class="form-control"
+    />
+  </div>
+  <p>
+    <fa-icon [icon]="faEmail"></fa-icon>
+    {{ user.email }}
+  </p>
+  <ngb-alert *ngIf="alert" [type]="alert.type" [dismissible]="true">{{
+    alert.message
+  }}</ngb-alert>
+  <button
+    *ngIf="profileForm.disabled"
+    class="btn btn-primary"
+    (click)="profileForm.enable()"
+  >
+    Editar perfil
+  </button>
+
+  <button *ngIf="!profileForm.disabled" type="submit" class="btn btn-primary">
+    Guardar cambios
+  </button>
+  <button
+    *ngIf="!profileForm.disabled"
+    type="button"
+    (click)="profileForm.disable()"
+    class="ms-2 btn btn-secondary"
+  >
+    Cancelar
+  </button>
+</form>

@@ -1,0 +1,9 @@
+.profile-avatar{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border: 5px solid rgba(176, 176, 176, 0.908);
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
