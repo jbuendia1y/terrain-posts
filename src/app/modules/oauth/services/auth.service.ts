@@ -83,6 +83,16 @@ export class AuthService {
     return created;
   }
 
+  async updateProfile(data: Partial<IUser>) {
+    const id = this.auth.currentUser?.uid;
+    if (!id) {
+      throw new Error('Update profile need currentUser of firebase auth');
+    }
+    const updated = await this.usersService.update(id, data);
+    await this.auth.currentUser?.reload();
+    return updated;
+  }
+
   async logout() {
     return await signOut(this.auth);
   }
