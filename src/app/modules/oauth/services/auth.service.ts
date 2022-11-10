@@ -7,16 +7,8 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   authState,
-  User,
 } from '@angular/fire/auth';
-import {
-  firstValueFrom,
-  lastValueFrom,
-  map,
-  mergeMap,
-  Observable,
-  of,
-} from 'rxjs';
+import { firstValueFrom, lastValueFrom, mergeMap, Observable, of } from 'rxjs';
 import { ICreateUser, IUser } from '../../users/models';
 import { UsersService } from '../../users/services';
 
