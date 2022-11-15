@@ -1,0 +1,24 @@
+<article class="card">
+  <img
+    class="card-image-top"
+    [src]="
+      post.photos.length > 0 ? post.photos[0].url : '/assets/default_photo.png'
+    "
+    [alt]="post.photos.length > 0 ? post.photos[0].name : 'Imágen por defecto'"
+  />
+  <div class="card-body">
+    <header class="header">
+      <h1 class="fs-2 fw-bold title">{{ post.title }}</h1>
+      <p class="fw-lighter address">{{ post.address }}</p>
+    </header>
+    <p class="description">{{ post.description }}</p>
+    <footer class="footer">
+      <p class="fw-lighter timestamp">
+        Creado el {{ post.createdAt | date: "shortDate" }}
+      </p>
+      <a [routerLink]="['/posts', post.id]" class="btn btn-primary view-more"
+        >Ver más</a
+      >
+    </footer>
+  </div>
+</article>
