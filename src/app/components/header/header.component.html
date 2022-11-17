@@ -3,20 +3,23 @@
     <a class="navbar-brand" [routerLink]="['/']">Terrenos</a>
     <ul class="nav-list">
       <li class="nav-item">
-        <a [routerLink]="['/']" class="nav-link"
-          ><fa-icon [icon]="faHome"></fa-icon> Home</a
-        >
-      </li>
-      <li class="nav-item">
         <a [routerLink]="['/posts']" class="nav-link"
-          ><fa-icon [icon]="faHome"></fa-icon> Terrenos</a
-        >
+          ><fa-icon [icon]="faHome"></fa-icon
+        ></a>
       </li>
-      <li class="nav-item" *ngIf="user$ | async; else loading">
-        <a [routerLink]="['/auth/profile']" class="nav-link"
-          ><fa-icon [icon]="faUser"></fa-icon> Perfil</a
-        >
-      </li>
+      <ng-container *ngIf="user$ | async; else loading">
+        <li class="nav-item">
+          <a [routerLink]="['/posts/create']" class="nav-link"
+            ><fa-icon [icon]="faPenToSquare"></fa-icon
+          ></a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/auth/profile']" class="nav-link"
+            ><fa-icon [icon]="faUser"></fa-icon
+          ></a>
+        </li>
+      </ng-container>
+
       <ng-template #loading>
         <li class="nav-item">
           <span class="nav-link">...</span>
