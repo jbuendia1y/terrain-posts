@@ -6,10 +6,11 @@ import {
   uploadString,
   list,
   UploadMetadata,
+  uploadBytesResumable,
   ListOptions,
   getDownloadURL,
 } from '@angular/fire/storage';
-import { from, map } from 'rxjs';
+import { from, of } from 'rxjs';
 
 interface Options {
   path?: string;
@@ -24,48 +25,58 @@ export class StorageService {
 
   constructor(private storage: Storage) {}
 
-  async uploadFromBytes(files: FileList | File[], options?: Options) {
+  uploadFromBytes(files: FileList | File[], options?: Options) {
     const url = this.uploadSource.concat('/', options?.path?.concat('/') || '');
-    const result = await Promise.all(
+    const result = from(
+      Promise.all(
+        Array.from(files).map((f) => {
+          const r = ref(this.storage, url.concat(f.name));
+          return uploadBytes(r, f, options?.metadata);
+        })
+      )
+    );
+    return result;
+  }
+
+  uploadResumable(files: FileList | File[], options?: Options) {
+    const url = this.uploadSource.concat('/', options?.path?.concat('/') || '');
+    const result = of(
       Array.from(files).map((f) => {
         const r = ref(this.storage, url.concat(f.name));
-        return uploadBytes(r, f, options?.metadata);
+        return uploadBytesResumable(r, f, options?.metadata);
       })
     );
     return result;
   }
 
-  async uploadFromString(
+  uploadFromString(
     files: { value: string; name: string }[],
     options?: Options
   ) {
     const url = this.uploadSource.concat('/', options?.path?.concat('/') || '');
-    const result = await Promise.all(
-      Array.from(files).map((f) => {
-        const r = ref(this.storage, url.concat(f.name));
-        return uploadString(r, f.value, 'base64url', options?.metadata);
-      })
+    const result = from(
+      Promise.all(
+        Array.from(files).map((f) => {
+          const r = ref(this.storage, url.concat(f.name));
+          return uploadString(r, f.value, 'base64url', options?.metadata);
+        })
+      )
     );
     return result;
   }
 
-  async uploadFiles(
+  uploadFiles(
     files: FileList | { value: string; name: string }[] | File[],
     options?: Options
   ) {
-    console.log('UPLOADING ??');
     if (files instanceof FileList) {
-      console.log('list files');
-      return await this.uploadFromBytes(files, options);
+      return this.uploadFromBytes(files, options);
     } else if (Array.isArray(files) && (files[0] as any).value) {
-      console.log('strings');
-      return await this.uploadFromString(files as any, options);
+      return this.uploadFromString(files as any, options);
     } else if (Array.isArray(files) && (files[0] as any).text) {
-      console.log('array files');
-      return await this.uploadFromBytes(files as File[], options);
+      return this.uploadFromBytes(files as File[], options);
     } else {
-      console.log('F');
-      return [];
+      return of();
     }
   }
 
