@@ -11,9 +11,17 @@ import {
   ScreenTrackingService,
   UserTrackingService,
 } from '@angular/fire/analytics';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideStorage, getStorage } from '@angular/fire/storage';
+import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
+import {
+  provideFirestore,
+  getFirestore,
+  connectFirestoreEmulator,
+} from '@angular/fire/firestore';
+import {
+  provideStorage,
+  getStorage,
+  connectStorageEmulator,
+} from '@angular/fire/storage';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -24,9 +32,26 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
+    provideAuth(() => {
+      const auth = getAuth();
+      if (!environment.production)
+        connectAuthEmulator(auth, 'http://localhost:9099', {
+          disableWarnings: true,
+        });
+      return auth;
+    }),
+    provideFirestore(() => {
+      const db = getFirestore();
+      if (!environment.production)
+        connectFirestoreEmulator(db, 'localhost', 8080);
+      return db;
+    }),
+    provideStorage(() => {
+      const storage = getStorage();
+      if (!environment.production)
+        connectStorageEmulator(storage, 'localhost', 9199);
+      return storage;
+    }),
     NgbModule,
     FontAwesomeModule,
   ],
