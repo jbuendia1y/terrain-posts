@@ -1,11 +1,11 @@
 <article class="card">
-  <img
-    class="card-image-top"
-    [src]="
-      post.photos.length > 0 ? post.photos[0].url : '/assets/default_photo.png'
-    "
-    [alt]="post.photos.length > 0 ? post.photos[0].name : 'Imágen por defecto'"
-  />
+  <ngb-carousel class="card-image-top">
+    <ng-template *ngFor="let p of previews | async" ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img class="image" [src]="p" [alt]="post.title" loading="lazy" />
+      </div>
+    </ng-template>
+  </ngb-carousel>
   <div class="card-body">
     <header class="header">
       <h1 class="fs-2 fw-bold title">{{ post.title }}</h1>

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { Observable, of, switchMap } from 'rxjs';
 import { getIcon } from 'src/app/libs';
+import { StorageService } from 'src/app/storage.service';
 import { IPost } from '../../models';
 
 @Component({
@@ -21,7 +23,7 @@ export class PostCardComponent implements OnInit {
     userId: 'Cargando',
     createdAt: {} as any,
   };
-  faCamera = faCamera;
+  public previews: Observable<string[]> = of(['/assets/default_photo.png']);
 
   public async getIcon(icon: string) {
     let val = await getIcon(icon);
@@ -29,7 +31,26 @@ export class PostCardComponent implements OnInit {
     return val;
   }
 
-  constructor() {}
+  constructor(private storageService: StorageService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.post.photos.length !== 0) {
+      this.previews = this.storageService
+        .findAll(
+          {
+            maxResults: 5,
+          },
+          this.post.id
+        )
+        .pipe(
+          switchMap((v) =>
+            Promise.all(
+              v.items.map((v) =>
+                this.storageService.getDownloadUrl(this.post.id, v.name)
+              )
+            )
+          )
+        );
+    }
+  }
 }
