@@ -7,6 +7,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/oauth/oauth.module').then((m) => m.OauthModule),
   },
+  {
+    path: 'posts',
+    loadChildren: () =>
+      import('./modules/posts/posts.module').then((m) => m.PostsModule),
+  },
 ];
 
 @NgModule({
