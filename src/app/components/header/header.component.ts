@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { faHome, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+  faPenToSquare,
+  faUserAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/modules/oauth/services';
 
 @Component({
@@ -10,6 +14,7 @@ import { AuthService } from 'src/app/modules/oauth/services';
 export class HeaderComponent implements OnInit {
   public faHome = faHome;
   public faUser = faUserAlt;
+  public faPenToSquare = faPenToSquare;
 
   get user$() {
     return this.authService.user$;

@@ -1,0 +1,27 @@
+<app-header></app-header>
+<div class="container-sm mt-2">
+  <div class="row">
+    <div class="m-auto col col-md-10">
+      <app-search-input placeholder="Buscar un terreno ..."></app-search-input>
+      <ng-container *ngIf="posts$ | async as posts">
+        <div class="mt-2">
+          <ngb-pagination
+            [maxSize]="5"
+            [page]="1"
+            [pageSize]="posts.items.length"
+            [collectionSize]="posts.total"
+            (pageChange)="onPageChange($event)"
+          >
+            <ng-template ngbPaginationEllipsis>...</ng-template>
+          </ngb-pagination>
+        </div>
+        <section class="mt-2 row gap-2">
+          <app-post-card
+            *ngFor="let post of posts.items"
+            [data]="post"
+          ></app-post-card>
+        </section>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+.post-form{
+    display:grid;
+}
+
+.price{
+    display:grid;
+    grid-template-columns: .25fr 1fr;
+    column-gap: 5px;
+}
+
+.append-feature-box{
+    display:flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.quantity-control{
+    flex: none;
+    width: 70px;
+}
+
+@media (min-width: 950px){
+    .post-form{
+        grid-template-columns: .7fr 1fr;
+        column-gap: 20px;
+        row-gap: 10px;
+    }
+
+    .photos{
+        grid-column: 1 / 2;
+    }
+
+    .features{
+        grid-column: 1 / 2;
+    }
+
+    .mains{
+        grid-column: 2 / 3;
+        grid-row: 1 / 4;
+    }
+
+    .post-actions{
+        display: flex;
+        justify-content: flex-end;
+    }
+}

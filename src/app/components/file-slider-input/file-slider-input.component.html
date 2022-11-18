@@ -1,0 +1,36 @@
+<ngb-carousel>
+  <ng-template *ngIf="previews.length === 0" ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img
+        [style]="{width, height}"
+        src="/assets/default_photo.png"
+        alt="Imagen por defecto"
+      />
+    </div>
+    <div class="carousel-caption">
+      <h3>Imagen por defecto</h3>
+    </div>
+  </ng-template>
+  <ng-template *ngFor="let p of previews; index as idx" ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img
+        [style]="{width, height}"
+        [src]="p"
+        [alt]="'Imágen número ' + (idx + 1)"
+      />
+    </div>
+    <div class="carousel-caption">
+      <h3>Imágen número {{ idx + 1 }}</h3>
+    </div>
+  </ng-template>
+</ngb-carousel>
+<label class="btn btn-primary w-100 mt-1">
+  <fa-icon [icon]="faCamera"></fa-icon> Adjuntar fotos
+  <input
+    type="file"
+    accept=".jpeg,.jpg,.png"
+    (change)="onChange($event)"
+    multiple
+    hidden
+  />
+</label>

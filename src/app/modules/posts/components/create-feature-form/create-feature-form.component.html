@@ -1,0 +1,62 @@
+<form
+  [formGroup]="featureForm"
+  (ngSubmit)="onSubmit()"
+  class="append-feature-box"
+>
+  <div class="w-100">
+    <label for="features">Característica</label>
+    <div class="select-icon">
+      <i [class]="'icon ' + featureForm.controls.icon.value"></i>
+      <input
+        class="form-control"
+        placeholder="Seleccione un ícono"
+        aria-labelledby="Ícono"
+        formControlName="icon"
+        [iconPicker]="featureForm.controls.icon.defaultValue"
+        [ipIconPack]="['fa']"
+        [ipPosition]="'bottom'"
+        (iconPickerSelect)="onIconPickerSelect($event)"
+      />
+    </div>
+    <div class="payload">
+      <input
+        type="number"
+        formControlName="quantity"
+        aria-labelledby="Cantidad"
+        class="form-control quantity-control"
+      />
+      <input
+        type="text"
+        id="features"
+        name="features"
+        aria-labelledby="Nombre"
+        formControlName="label"
+        class="form-control"
+      />
+    </div>
+  </div>
+  <div class="footer">
+    <div class="list">
+      <div
+        class="badge rounded-pill text-bg-secondary d-inline-flex align-items-center p-1 px-2"
+        *ngFor="let feature of features; index as i"
+      >
+        <i [class]="feature.icon"></i>
+        <p class="m-0 mx-1">
+          {{ feature.quantity }}
+          <span class="d-inline-block">{{ feature.label }}</span>
+        </p>
+        <button (click)="deleteFeature(i)" class="btn p-1 rounded-circle">
+          <fa-icon [icon]="faXmark"></fa-icon>
+        </button>
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="featureForm.invalid"
+      class="btn btn-primary"
+    >
+      Añadir
+    </button>
+  </div>
+</form>
