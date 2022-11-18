@@ -1,0 +1,117 @@
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+  <div class="post-form">
+    <app-file-slider-input
+      class="photos"
+      (change)="setFiles($event)"
+    ></app-file-slider-input>
+    <div class="mains mt-3 mt-md-0">
+      <div class="mb-3">
+        <label for="title">Título</label>
+        <input
+          id="ngClass"
+          name="ngClass"
+          ype="text"
+          class="form-control"
+          formControlName="title"
+          [ngClass]="{ 'is-invalid': postForm.controls.title.invalid }"
+          required
+        />
+        <span class="d-block mt-1" *ngIf="postForm.controls.title.value"
+          >URL: {{ slugify(postForm.controls.title.value) }}</span
+        >
+        <span
+          class="invalid-feedback"
+          *ngIf="postForm.controls.title.errors?.['required']"
+          >Es necesario un título</span
+        >
+      </div>
+      <div class="mb-3">
+        <label for="title">Descripción</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          formControlName="description"
+          [ngClass]="{ 'is-invalid': postForm.controls.description.invalid }"
+          required
+        ></textarea>
+        <span
+          class="invalid-feedback"
+          *ngIf="postForm.controls.description.errors?.['required']"
+          >Por favor ingrese una descripción corta</span
+        >
+      </div>
+      <div class="mb-3">
+        <label for="title">Dirección</label>
+        <input
+          id="address"
+          name="address"
+          type="text"
+          class="form-control"
+          formControlName="address"
+          [ngClass]="{ 'is-invalid': postForm.controls.address.invalid }"
+          required
+        />
+        <span
+          class="invalid-feedback"
+          *ngIf="postForm.controls.address.errors?.['required']"
+          >Es necesaria la dirección</span
+        >
+      </div>
+      <div class="mb-3">
+        <label for="price">Precio</label>
+        <ng-container [formGroup]="postForm.controls.price">
+          <div class="price">
+            <select
+              name="currency"
+              id="currency"
+              formControlName="currency"
+              class="form-select"
+            >
+              <option *ngFor="let c of currencies" [value]="c">{{ c }}</option>
+            </select>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              class="form-control"
+              formControlName="quantity"
+              [ngClass]="{
+                'is-invalid': postForm.controls.price.controls.quantity.invalid
+              }"
+              required
+            />
+          </div>
+        </ng-container>
+        <span
+          class="invalid-feedback"
+          *ngIf="postForm.controls.price.errors?.['required']"
+          >Es necesaria introducir un precio</span
+        >
+      </div>
+    </div>
+    <div class="mb-3 features">
+      <app-create-feature-form
+        (submit)="setFeatures($event)"
+      ></app-create-feature-form>
+    </div>
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="open(content)">
+      Publicar
+    </button>
+    <button type="button" class="btn btn-secondary ms-2">Descartar</button>
+  </div>
+</form>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h3>Estás seguro de publicar ?</h3>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modal.dismiss()">
+      Cancelar
+    </button>
+    <button class="btn btn-primary" (click)="modal.close(true)">Sí</button>
+  </div>
+</ng-template>
