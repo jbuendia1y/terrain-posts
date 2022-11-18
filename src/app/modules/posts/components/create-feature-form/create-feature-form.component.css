@@ -1,0 +1,30 @@
+.select-icon{
+    position:relative;
+}
+
+.icon{
+    position: absolute;
+    right:20px;
+    top: 25%;
+}
+
+.payload{
+    display: grid;
+    grid-template-columns: .35fr 1fr;
+}
+
+.footer{
+    display:grid;
+    grid-template-columns: 1fr .50fr;
+    align-items: center;
+
+    margin-top: 5px;
+}
+
+.list{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    overflow-x: auto;
+}
