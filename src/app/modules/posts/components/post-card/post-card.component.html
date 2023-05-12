@@ -9,12 +9,12 @@
   <div class="card-body">
     <header class="header">
       <h1 class="fs-2 fw-bold title">{{ post.title }}</h1>
-      <p class="fw-lighter address">{{ post.address }}</p>
+      <p class="fw-lighter address">{{ post.ubication.avenue }}</p>
     </header>
     <p class="description">{{ post.description }}</p>
     <footer class="footer">
       <p class="fw-lighter timestamp">
-        Creado el {{ post.createdAt | date: "shortDate" }}
+        Creado el {{ post.createdAt | date : "shortDate" }}
       </p>
       <a [routerLink]="['/posts', post.id]" class="btn btn-primary view-more"
         >Ver más</a

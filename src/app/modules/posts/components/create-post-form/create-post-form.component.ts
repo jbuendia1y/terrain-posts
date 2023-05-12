@@ -1,15 +1,17 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { faCamera, faCross, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/modules/oauth/services';
 import { firstValueFrom, lastValueFrom, map, Observable, of } from 'rxjs';
 import { PostsService } from '../../services';
-import { readFile, slugify } from 'src/app/libs';
+import { slugify } from 'src/app/libs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IFeature } from '../../models';
 import { StorageService } from 'src/app/storage.service';
 import { currencies } from 'src/app/modules/core/constants';
 import { Currency } from 'src/app/modules/core/models';
+
+import peruCities from 'src/app/modules/core/pe.json';
 
 @Component({
   selector: 'app-create-post-form',
@@ -21,7 +23,7 @@ export class CreatePostFormComponent implements OnInit {
   public faXmark = faXmark;
 
   public currencies = currencies;
-
+  public cities = peruCities;
   postForm = new FormGroup({
     title: new FormControl('Publicacion de mi terreno o edificio', {
       validators: Validators.required,
@@ -31,21 +33,31 @@ export class CreatePostFormComponent implements OnInit {
       validators: Validators.required,
       nonNullable: true,
     }),
-    address: new FormControl('Av. Avenida de mi terreno XXXXX', {
-      validators: Validators.required,
-      nonNullable: true,
+    ubication: new FormGroup({
+      country: new FormControl('PE', {
+        validators: Validators.required,
+        nonNullable: true,
+      }),
+      city: new FormControl('Lima', {
+        validators: Validators.required,
+        nonNullable: true,
+      }),
+      aveneu: new FormControl('', {
+        validators: Validators.required,
+        nonNullable: true,
+      }),
     }),
-    price: new FormGroup({
+    prices: new FormGroup({
       currency: new FormControl(Currency.PEN, {
         validators: Validators.required,
         nonNullable: true,
       }),
-      quantity: new FormControl(0, {
+      cost: new FormControl(0, {
         validators: Validators.required,
         nonNullable: true,
       }),
     }),
-    photos: new FormControl<FileList>({} as FileList, {
+    images: new FormControl<FileList>({} as FileList, {
       validators: Validators.required,
       nonNullable: true,
     }),
@@ -82,7 +94,7 @@ export class CreatePostFormComponent implements OnInit {
 
   setFiles(files: FileList) {
     if (!(files instanceof FileList)) return;
-    this.postForm.controls.photos.setValue(files);
+    this.postForm.controls.images.setValue(files);
   }
 
   setFeatures(features: IFeature[]) {
@@ -96,9 +108,9 @@ export class CreatePostFormComponent implements OnInit {
     if (!user) throw new Error('To create a post, you will need login');
     console.log({ values, userId: user.id });
     let photos: Observable<{ name: string; url: string }[]> = of([]);
-    if (values.photos) {
+    if (values.images) {
       photos = this.storageService
-        .uploadFiles(values.photos, {
+        .uploadFiles(values.images, {
           path: slugify(values.title as string),
         })
         .pipe(

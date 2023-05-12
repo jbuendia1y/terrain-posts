@@ -12,19 +12,9 @@
         placeholder="Seleccione un ícono"
         aria-labelledby="Ícono"
         formControlName="icon"
-        [iconPicker]="featureForm.controls.icon.defaultValue"
-        [ipIconPack]="['fa']"
-        [ipPosition]="'bottom'"
-        (iconPickerSelect)="onIconPickerSelect($event)"
       />
     </div>
     <div class="payload">
-      <input
-        type="number"
-        formControlName="quantity"
-        aria-labelledby="Cantidad"
-        class="form-control quantity-control"
-      />
       <input
         type="text"
         id="features"
@@ -43,7 +33,6 @@
       >
         <i [class]="feature.icon"></i>
         <p class="m-0 mx-1">
-          {{ feature.quantity }}
           <span class="d-inline-block">{{ feature.label }}</span>
         </p>
         <button (click)="deleteFeature(i)" class="btn p-1 rounded-circle">

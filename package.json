@@ -28,9 +28,9 @@
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.0",
     "font-awesome": "^4.7.0",
-    "ngx-icon-picker": "^1.9.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "zod": "^3.20.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

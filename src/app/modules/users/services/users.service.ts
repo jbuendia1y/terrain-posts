@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
-import { doc } from '@firebase/firestore';
+import {
+  docData,
+  Firestore,
+  setDoc,
+  updateDoc,
+  doc,
+} from '@angular/fire/firestore';
 import { map } from 'rxjs';
 import { ICreateUser, IUser } from '../models';
 

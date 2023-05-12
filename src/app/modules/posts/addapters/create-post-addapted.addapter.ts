@@ -1,16 +1,19 @@
-import { IEndpoinPost, IPost } from '../models';
+import { IEndpointPost, IPost } from '../models';
 
-export function createPostAddapted(ed: IEndpoinPost): IPost {
+export function createPostAddapted(ed: IEndpointPost): IPost {
   return {
     id: ed.id,
-    address: ed.address,
-    createdAt: ed.createdAt.toDate(),
-    description: ed.description,
-    features: ed.features,
-    photos: ed.photos,
-    price: ed.price,
     title: ed.title,
+    description: ed.description,
+    content: ed.content,
+    images: ed.images,
+    contacts: ed.contacts,
+    dimensions: ed.dimensions,
+    features: ed.features,
+    prices: ed.prices,
+    ubication: ed.ubication,
     user: ed.user,
-    userId: ed.userId,
+    createdAt: ed.createdAt.toDate(),
+    updatedAt: ed.updatedAt.toDate(),
   };
 }

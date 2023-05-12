@@ -17,7 +17,7 @@ import { map, mergeMap, Observable } from 'rxjs';
 import { slugify } from 'src/app/libs';
 import { Paginate } from '../../core/models';
 import { createPostAddapted } from '../addapters';
-import { ICreatePost, IEndpoinPost, IPost } from '../models';
+import { ICreatePost, IEndpointPost, IPost } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -31,14 +31,18 @@ export class PostsService {
   async create(data: ICreatePost): Promise<Observable<IPost>> {
     const id = slugify(data.title);
     const ref = doc(this.firestore, this.source, id);
-    await setDoc(ref, { ...data, createdAt: serverTimestamp() });
+    await setDoc(ref, {
+      ...data,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
     return this.findOne(id);
   }
 
   findOne(id: string): Observable<IPost> {
     const ref = doc(this.firestore, this.source, id);
     return docData(ref, { idField: 'id' }).pipe(
-      map((v) => createPostAddapted(v as IEndpoinPost))
+      map((v) => createPostAddapted(v as IEndpointPost))
     );
   }
 
@@ -64,7 +68,7 @@ export class PostsService {
           map((v) => ({
             total: totalDocs,
             currentPage: page,
-            items: (v as IEndpoinPost[]).map(createPostAddapted),
+            items: (v as IEndpointPost[]).map(createPostAddapted),
           }))
         );
       })

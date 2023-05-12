@@ -43,24 +43,49 @@
       </div>
       <div class="mb-3">
         <label for="title">Dirección</label>
-        <input
-          id="address"
-          name="address"
-          type="text"
-          class="form-control"
-          formControlName="address"
-          [ngClass]="{ 'is-invalid': postForm.controls.address.invalid }"
-          required
-        />
-        <span
-          class="invalid-feedback"
-          *ngIf="postForm.controls.address.errors?.['required']"
-          >Es necesaria la dirección</span
-        >
+        <ng-container [formGroup]="postForm.controls.ubication">
+          <input
+            id="country"
+            name="country"
+            type="text"
+            class="form-control"
+            value="PE"
+            [ngClass]="{
+              'is-invalid': postForm.controls.ubication.controls.country.invalid
+            }"
+            required
+          />
+          <select
+            name="city"
+            id="city"
+            formControlName="city"
+            class="form-select"
+          >
+            <option *ngFor="let value of cities" [value]="value.city">
+              {{ value.city }}
+            </option>
+          </select>
+          <input
+            id="aveneu"
+            name="aveneu"
+            type="text"
+            class="form-control"
+            formControlName="aveneu"
+            [ngClass]="{
+              'is-invalid': postForm.controls.ubication.controls.aveneu.invalid
+            }"
+            required
+          />
+          <span
+            class="invalid-feedback"
+            *ngIf="postForm.controls.ubication.controls.aveneu.errors?.['required']"
+            >Es necesaria la dirección</span
+          >
+        </ng-container>
       </div>
       <div class="mb-3">
         <label for="price">Precio</label>
-        <ng-container [formGroup]="postForm.controls.price">
+        <ng-container [formGroup]="postForm.controls.prices">
           <div class="price">
             <select
               name="currency"
@@ -68,16 +93,18 @@
               formControlName="currency"
               class="form-select"
             >
-              <option *ngFor="let c of currencies" [value]="c">{{ c }}</option>
+              <option *ngFor="let value of currencies" [value]="value">
+                {{ value }}
+              </option>
             </select>
             <input
               type="number"
-              id="quantity"
-              name="quantity"
+              id="cost"
+              name="cost"
               class="form-control"
-              formControlName="quantity"
+              formControlName="cost"
               [ngClass]="{
-                'is-invalid': postForm.controls.price.controls.quantity.invalid
+                'is-invalid': postForm.controls.prices.controls.cost.invalid
               }"
               required
             />
@@ -85,8 +112,8 @@
         </ng-container>
         <span
           class="invalid-feedback"
-          *ngIf="postForm.controls.price.errors?.['required']"
-          >Es necesaria introducir un precio</span
+          *ngIf="postForm.controls.prices.errors?.['required']"
+          >Es necesario introducir un precio</span
         >
       </div>
     </div>

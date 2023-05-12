@@ -12,10 +12,6 @@ export class CreateFeatureFormComponent implements OnInit {
   public faXmark = faXmark;
 
   featureForm = new FormGroup({
-    quantity: new FormControl(0, {
-      validators: Validators.required,
-      nonNullable: true,
-    }),
     icon: new FormControl('fa fa-user', {
       validators: Validators.required,
       nonNullable: true,

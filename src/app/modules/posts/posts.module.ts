@@ -13,7 +13,6 @@ import { CreatePostFormComponent } from './components/create-post-form/create-po
 import { CreatePostComponent } from './pages/create-post/create-post.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateFeatureFormComponent } from './components/create-feature-form/create-feature-form.component';
-import { IconPickerModule } from 'ngx-icon-picker';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { IconPickerModule } from 'ngx-icon-picker';
     NgbPaginationModule,
     NgbCarouselModule,
     NgbDropdownModule,
-    IconPickerModule,
     SharedModule,
     ReactiveFormsModule,
     PostsRoutingModule,

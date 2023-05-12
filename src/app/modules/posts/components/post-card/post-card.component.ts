@@ -15,12 +15,15 @@ export class PostCardComponent implements OnInit {
     id: 'Cargando',
     title: 'Cargando',
     description: 'Cargando',
-    address: 'Cargando',
-    price: 0,
+    contacts: [],
+    content: 'Cargando',
+    dimensions: { area: 0, height: 0 },
+    images: [],
+    prices: [],
+    ubication: { avenue: '', city: '', country: '' },
     features: [],
-    photos: [],
+    updatedAt: {} as any,
     user: {} as any,
-    userId: 'Cargando',
     createdAt: {} as any,
   };
   public previews: Observable<string[]> = of(['/assets/default_photo.png']);
@@ -34,7 +37,7 @@ export class PostCardComponent implements OnInit {
   constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
-    if (this.post.photos.length !== 0) {
+    if (this.post.images.length !== 0) {
       this.previews = this.storageService
         .findAll(
           {
